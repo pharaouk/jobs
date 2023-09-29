@@ -11,18 +11,10 @@ strict: false
 datasets:
   - path: Open-Orca/OpenOrca
     type: alpaca_w_system.load_open_orca
-  - path: AlignmentLab-AI/agentcode
-    type: oasst
-  - path: garage-bAInd/Open-Platypus
-    type: alpaca
-  - path: glaiveai/glaive-code-assistant
-    type: alpaca_chat.load_qa
-  - path: pharaouk/cotC
-    type: alpaca
 
 dataset_prepared_path: last_run_prepared
-val_set_size: 0.01
-output_dir: ./out
+val_set_size: 0.00001
+output_dir: ./n1/mistral_out
 
 sequence_len: 8192
 sample_packing:
@@ -34,8 +26,8 @@ wandb_watch:
 wandb_run_id: mistral_full
 wandb_log_model: "checkpoint"
 
-gradient_accumulation_steps: 8
-micro_batch_size: 4
+gradient_accumulation_steps: 4
+micro_batch_size: 2
 num_epochs: 2
 optimizer: adamw_bnb_8bit
 lr_scheduler: cosine
@@ -58,8 +50,11 @@ flash_attention: true
 warmup_steps: 10
 eval_steps: 250
 eval_table_size: 5
-hub_model_id: SkunkworksAI/Mistralic-7B
+hub_model_id: SkunkworksAI/Mistralic-Instruct-7B
 eval_table_max_new_tokens: 128
+bench_dataset: pharaouk/dharma-1/dharma_1_mini.json
+do_bench_eval: true
+save_total_limit: 5
 save_steps: 250
 debug:
 deepspeed:
@@ -70,3 +65,6 @@ special_tokens:
   bos_token: "<s>"
   eos_token: "</s>"
   unk_token: "<unk>"
+
+
+
