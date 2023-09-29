@@ -75,6 +75,9 @@ debug:
 deepspeed:
 hub_model_id: pharaouk/zeta-1B-extended
 weight_decay: 0.1
+bench_dataset: pharaouk/dharma-1/dharma_1_mini.json
+do_bench_eval: true
+save_total_limit: 5
 fsdp:
 fsdp_config:
 resize_token_embeddings_to_32x: true
