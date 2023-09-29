@@ -23,7 +23,7 @@ datasets:
 
 dataset_prepared_path: last_run_prepared
 val_set_size: 0.00005
-output_dir: ./n3/phi-sft-zeta
+output_dir: ./n4/phi-sft-zeta
 
 sequence_len: 2048
 sample_packing: true
@@ -37,10 +37,10 @@ lora_dropout:
 lora_target_linear:
 lora_fan_in_fan_out:
 
-wandb_project: zeta
+wandb_project: zeta-1
 wandb_entity:
 wandb_watch:
-wandb_run_id: zeta
+wandb_run_id: zeta-ext
 wandb_log_model:
 
 gradient_accumulation_steps: 16
@@ -68,9 +68,8 @@ xformers_attention:
 flash_attention: true
 
 warmup_steps: 100
-eval_steps: 0.05
+eval_steps: 0.2
 save_steps: 250
-save_total_limit: 100
 debug:
 deepspeed:
 hub_model_id: pharaouk/zeta-1B-extended
