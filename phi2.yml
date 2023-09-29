@@ -10,6 +10,8 @@ load_in_4bit: false
 strict: false
 
 datasets:
+  - path: Open-Orca/OpenOrca
+    type: alpaca_w_system.load_open_orca
   - path: AlignmentLab-AI/agentcode
     type: oasst
   - path: garage-bAInd/Open-Platypus
