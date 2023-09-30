@@ -1,0 +1,73 @@
+base_model: glaiveai/glaive-coder-7b
+base_model_config: glaiveai/glaive-coder-7b
+model_type: LlamaForCausalLM
+tokenizer_type: CodeLlamaTokenizer
+is_llama_derived_model: true
+
+load_in_8bit: false
+load_in_4bit: false
+strict: false
+
+datasets:
+  - path: pharaouk/thinking_models
+    type: alpaca
+    
+dataset_prepared_path: last_run_prepared
+val_set_size: 0.00001
+output_dir: ./-out
+
+sequence_len: 4096
+sample_packing: true
+pad_to_sequence_len: true
+
+adapter:
+lora_model_dir:
+lora_r: 
+lora_alpha: 
+lora_dropout:
+lora_target_linear:
+lora_fan_in_fan_out:
+
+wandb_project: glaive-thinking
+wandb_entity:
+wandb_watch:
+wandb_run_id: glaive
+wandb_log_model: checkpoint
+
+gradient_accumulation_steps: 4
+micro_batch_size: 2
+num_epochs: 3
+optimizer: adamw_bnb_8bit
+lr_scheduler: cosine
+learning_rate: 0.0002
+
+train_on_inputs: false
+group_by_length: false
+bf16: true
+fp16: false
+tf32: false
+
+gradient_checkpointing: true
+early_stopping_patience:
+resume_from_checkpoint:
+local_rank:
+logging_steps: 1
+xformers_attention:
+flash_attention: true
+
+warmup_steps: 10
+eval_steps: 20
+save_steps:
+debug:
+hub_model_id: pharaouk/thinking
+deepspeed:
+weight_decay: 0.1
+bench_dataset: pharaouk/dharma-1/dharma_1_mini.json
+do_bench_eval: true
+save_total_limit: 5
+fsdp:
+fsdp_config:
+special_tokens:
+  bos_token: "<s>"
+  eos_token: "</s>"
+  unk_token: "<unk>"
