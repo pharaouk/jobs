@@ -1,0 +1,74 @@
+base_model: mistralai/Mistral-7B-v0.1
+base_model_config: mistralai/Mistral-7B-v0.1
+model_type: MistralForCausalLM
+tokenizer_type: LlamaTokenizer
+is_mistral_derived_model: true
+
+load_in_8bit: false
+load_in_4bit: false
+strict: false
+
+datasets:
+  - path: glaiveai/glaive-code-assistant
+    type: alpaca_chat.load_qa
+
+
+dataset_prepared_path: last_run_prepared
+val_set_size: 0.0001
+output_dir: ../n5/mistral_out
+
+sequence_len: 4096
+sample_packing: true
+pad_to_sequence_len: true
+
+wandb_project: Mistral
+wandb_entity: 
+wandb_watch: 
+wandb_run_id: mistral_tiny22
+wandb_log_model: "checkpoint"
+
+gradient_accumulation_steps: 1
+micro_batch_size: 6
+num_epochs: 2
+optimizer: adamw_torch
+lr_scheduler: cosine
+learning_rate: 0.000006
+
+train_on_inputs: false
+group_by_length: false
+bf16: true
+fp16: false
+tf32: false
+
+gradient_checkpointing: true
+early_stopping_patience:
+resume_from_checkpoint:
+local_rank:
+logging_steps: 1
+xformers_attention:
+flash_attention: true
+
+warmup_steps: 10
+eval_steps: 0.05
+bench_dataset: pharaouk/dharma-1/dharma_1_mini.json
+do_bench_eval: true
+save_total_limit: 3
+eval_table_size: 5
+hub_model_id: pharaouk/Mistralic3-7B
+eval_table_max_new_tokens: 128
+save_steps: 50
+debug:
+deepspeed:
+adam_beta2: 0.95
+weight_decay: 0.05
+max_grad_norm: 1.0
+adam_epsilon: 0.00001
+fsdp:
+fsdp_config:
+special_tokens:
+  bos_token: "<s>"
+  eos_token: "<|im_end|>"
+  unk_token: "<unk>"
+tokens:
+  - "<|im_start|>"
+  - "<|im_end|>"
