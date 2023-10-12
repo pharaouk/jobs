@@ -1,0 +1,33 @@
+import os
+import json
+import requests
+from concurrent.futures import ThreadPoolExecutor
+
+def download_image(k, url, output_file):
+    if not os.path.isfile(output_file):  # if file doesn't exist, download it
+        try:
+            response = requests.get(url)
+            response.raise_for_status()  # Raise an exception for HTTP errors
+            with open(output_file, 'wb') as f:
+                f.write(response.content)
+        except Exception as e:
+            print(f"Error downloading image from {url} to {output_file}")
+            print(e)
+
+# Load dataset json file
+with open('dataset.json', 'r') as fp:
+    data = json.load(fp)
+
+# Create images directory if it doesn't exist
+if not os.path.exists('./images'):
+    os.mkdir('./images')
+
+# Create a ThreadPoolExecutor
+with ThreadPoolExecutor(max_workers=10) as executor:
+    # Submit download tasks to the executor
+    futures = [executor.submit(download_image, k, data[k]['imageURL'], f'images/{k}{os.path.splitext(data[k]["imageURL"])[1]}') 
+               for k in data.keys()]
+
+# Wait for all tasks to complete
+for future in futures:
+    future.result()
