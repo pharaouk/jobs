@@ -1,10 +1,11 @@
 #!/bin/bash
 
 # define the directories
-directories=("coco" "gqa" "ocr_vqa" "textvqa" "vg")
+directories=("train_images" "images" "train2017" "VG_100K" "VG_100K_2")
 
 # iterate over directories
 for dir in "${directories[@]}"; do
+    
     # check if the subdirectory exists
     if [ -d "$dir/$dir" ]; then
         echo "Moving files from $dir/$dir to $dir"
@@ -13,3 +14,6 @@ for dir in "${directories[@]}"; do
         rmdir "$dir/$dir"
     fi
 done
+
+
+
